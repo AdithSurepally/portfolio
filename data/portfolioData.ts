@@ -9,6 +9,10 @@ export const portfolioData: PortfolioData = {
     summary: 'Detail-oriented VLSI engineering graduate specializing in analog IC layout. Possesses hands-on experience from an intensive training program, covering the end-to-end physical design of standard cells and complex analog circuits like Bandgap References and PLLs. Strong grasp of advanced layout techniques to optimize for performance and reliability in deep-submicron nodes.',
     profilePicUrl: '/images/profile-pic.png',
     aboutMe: "I'm a curious and driven engineer, passionate about understanding the intricate workings of integrated circuits. My goal is to contribute to cutting-edge analog designs and continuously learn in the ever-evolving world of semiconductor technology.",
+    hero: {
+      backgroundImageUrl: '/images/hero-background.jpg',
+      overlayColor: 'rgba(255, 255, 255, 0.85)', // A light overlay to keep text readable
+    },
   },
   socialLinks: [
     { name: 'LinkedIn', url: 'https://linkedin.com/in/surepallyadith' },

@@ -7,6 +7,10 @@ export interface PersonalInfo {
   summary: string;
   profilePicUrl: string;
   aboutMe: string;
+  hero?: {
+    backgroundImageUrl: string;
+    overlayColor: string;
+  };
 }
 
 export interface SocialLink {
