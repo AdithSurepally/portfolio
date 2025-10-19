@@ -7,6 +7,7 @@ import ProjectsPage from './pages/ProjectsPage';
 import FloatingResumeButton from './components/FloatingResumeButton';
 import FloatingSocials from './components/FloatingSocials';
 import { portfolioData } from './data/portfolioData';
+import FloatingProjectsButton from './components/FloatingProjectsButton';
 
 const App: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -58,6 +59,7 @@ const App: React.FC = () => {
       </div>
       <FloatingResumeButton resumeUrl={portfolioData.resumeUrl} bottomPosition={bottomPosition} />
       <FloatingSocials socialLinks={portfolioData.socialLinks} bottomPosition={bottomPosition} />
+      <FloatingProjectsButton />
     </div>
   );
 };
