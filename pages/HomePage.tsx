@@ -109,7 +109,7 @@ const HomePage: React.FC = () => {
             </div>
           ))}
         </div>
-      </section>
+      </Section>
       
       {/* Featured Projects Section */}
       <Section title="Featured Projects" className="bg-gray-50">
@@ -133,10 +133,11 @@ const HomePage: React.FC = () => {
               <p className="text-sm text-gray-500 mb-1">{edu.period}</p>
               <h3 className="text-xl font-bold text-gray-800">{edu.degree}</h3>
               <p className="text-md text-gray-600">{edu.institution}</p>
+              {edu.score && <p className="text-md text-red-700 font-semibold mt-1">{edu.score}</p>}
             </div>
           ))}
         </div>
-      </section>
+      </Section>
     </div>
   );
 };

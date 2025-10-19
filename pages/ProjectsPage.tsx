@@ -87,7 +87,7 @@ const ProjectsPage: React.FC = () => {
             {filteredAndSortedProjects.map((project) => (
                 <div key={project.id} id={project.id} className="bg-white p-6 sm:p-8 rounded-lg shadow-lg border border-gray-200 transition-shadow hover:shadow-xl">
                 <div className="mb-6">
-                    <h3 className="text-3xl font-bold text-gray-900">{project.title}</h3>
+                    <h3 className="text-3xl font-bold text-gray-900 break-words">{project.title}</h3>
                     <p className="text-lg text-red-600 font-semibold mt-1">{project.subtitle}</p>
                     <p className="mt-4 text-gray-600">{project.description}</p>
                 </div>
