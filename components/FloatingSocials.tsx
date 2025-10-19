@@ -20,7 +20,7 @@ const iconMap: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> } = {
 const FloatingSocials: React.FC<FloatingSocialsProps> = ({ socialLinks, bottomPosition }) => {
   return (
     <div 
-      className="fixed left-6 z-50 transition-all duration-300 ease-in-out"
+      className="fixed left-6 z-40 transition-all duration-300 ease-in-out"
       style={{ bottom: `${bottomPosition}px` }}
     >
       <div className="bg-white/30 backdrop-blur-md p-3 rounded-xl border border-white/50 shadow-lg flex flex-col space-y-3">
