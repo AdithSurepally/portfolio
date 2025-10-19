@@ -20,8 +20,6 @@ This section covers the main parts of your portfolio that you'll want to keep cu
 
 Find the `personalInfo` section. Here you can change your name, title, email, phone, and the summary paragraphs.
 
-To change your main profile picture, first place your image in the `public/images` folder, then update the `profilePicUrl` with the full path from the public root (e.g., `/images/your-photo.jpg`).
-
 ```javascript
 personalInfo: {
   name: 'Your Name Here',
@@ -33,6 +31,27 @@ personalInfo: {
   aboutMe: "A short paragraph about your passion and goals.",
 },
 ```
+
+### Hero Section Background
+
+You can customize the background of the main hero section at the top of the homepage.
+
+```javascript
+personalInfo: {
+  // ... other properties
+  hero: {
+    backgroundImageUrl: '/images/hero-background.jpg', // Path to your background image
+    overlayColor: 'rgba(255, 255, 255, 0.85)',     // Color and opacity of the shade
+  },
+},
+```
+
+-   `backgroundImageUrl`: Change this path to your desired background image.
+-   `overlayColor`: This adds a semi-transparent color over the background image to ensure the text on top is readable. It uses the `rgba()` format.
+    -   The first three numbers are for the color (Red, Green, Blue from 0 to 255).
+    -   The last number is the opacity (from 0.0 for fully transparent to 1.0 for fully opaque).
+    -   **For a light shade:** Use `rgba(255, 255, 255, 0.8)` (white at 80% opacity).
+    -   **For a dark shade:** Use `rgba(0, 0, 0, 0.5)` (black at 50% opacity).
 
 ### Professional Experience
 
@@ -93,19 +112,46 @@ Find the `education` and `skills` arrays. You can edit these in the same way as 
 
 ---
 
-## 3. Updating Links & Files
+## 3. Working with Files & Links
 
-**Important Note on Paths:** For your site to work reliably, all local files (images, your resume, favicon) **must** be placed inside the `public` folder. When you reference them in the data file, the path should start with a forward slash (`/`) and **not** include `public/`.
+This is a critical step! To ensure your images and resume work correctly, you must understand how file paths are handled.
 
-For example, a file located at `public/images/my-photo.jpg` should be referenced as `/images/my-photo.jpg`.
+### The `public` Folder: The Source of Truth
 
--   **File Location:** `public/images/my-photo.jpg` -> **Path in `portfolioData.ts`:** `'/images/my-photo.jpg'`
--   **File Location:** `public/My_Resume.pdf` -> **Path in `portfolioData.ts`:** `'/My_Resume.pdf'`
+**Every local file you want to use on your website MUST be placed inside the `public` folder.**
 
-**Summary of Path Rules:**
--   **Correct:** `'/images/my-photo.jpg'` (starts with `/`, no `public`)
--   **Incorrect:** `'public/images/my-photo.jpg'`
--   **Incorrect:** `'images/my-photo.jpg'` (missing leading slash)
+This includes:
+-   Your profile picture
+-   The hero background image
+-   All project images (schematics, layouts)
+-   Your resume PDF
+
+### The Golden Rule for Writing Paths
+
+When you reference a file in `portfolioData.ts`, write the path **as if the `public` folder is the root of the website**. This means:
+
+1.  Your path **must** start with a forward slash (`/`).
+2.  You **must not** include `public/` in the path string.
+
+---
+
+**Example 1: Your Resume**
+
+1.  **Place the file:** `public/Adith_Surepally_Resume.pdf`
+2.  **Use this path in the data file:** `resumeUrl: '/Adith_Surepally_Resume.pdf',`
+
+**Example 2: A Project Image**
+
+1.  **Place the file:** `public/images/my-cool-layout.png`
+2.  **Use this path in the data file:** `layoutImg: '/images/my-cool-layout.png',`
+
+---
+
+> **⚠️ Common Mistakes to Avoid**
+>
+> -   **Incorrect Path:** `resumeUrl: 'public/Adith_Surepally_Resume.pdf'` (Includes `public/`)
+> -   **Incorrect Path:** `layoutImg: 'images/my-cool-layout.png'` (Missing the starting `/`)
+> -   **Incorrect File Location:** Placing files anywhere *outside* the `public` folder. They will not be found by the website. If you add a new file, you may need to restart the application to see the change.
 
 ### Social Media Links
 
@@ -119,32 +165,6 @@ socialLinks: [
   { name: 'Mail', url: 'mailto:your.email@example.com' },
   { name: 'WhatsApp', url: 'https://wa.me/yourphonenumber' },
 ],
-```
-
-### Your Resume File
-
-To update the resume downloadable from the buttons on the site:
-
-1.  Place your new resume PDF file in the `public` folder.
-2.  Find the `resumeUrl` in the data file and change the filename to match yours, starting with a `/`.
-
-```javascript
-// Example: If your file is named 'My_Resume_2025.pdf' and is in `public/`
-resumeUrl: '/My_Resume_2025.pdf',
-```
-
-### Project Images
-
-To add images for your projects (schematics, layouts, etc.):
-
-1.  If it doesn't already exist, create a folder named `images` inside the `public` folder.
-2.  Place your project image files (e.g., `my_opamp_layout.png`) inside this `public/images` folder.
-3.  In your project data, update the `schematicImg` and `layoutImg` paths to point to your new images.
-
-```javascript
-// Example: Use root-relative paths
-schematicImg: '/images/my_opamp_schematic.png',
-layoutImg: '/images/my_opamp_layout.png',
 ```
 
 That's it! After saving the `data/portfolioData.ts` file, your website will automatically update with the new information.

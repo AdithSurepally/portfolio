@@ -11,11 +11,28 @@ const HomePage: React.FC = () => {
   const featuredProjects = projects.filter(p => curiosityProjectIds.includes(p.id))
     .sort((a, b) => curiosityProjectIds.indexOf(a.id) - curiosityProjectIds.indexOf(b.id));
 
+  // Extract filename from the URL path to ensure the correct name is suggested on download.
+  const resumeFilename = resumeUrl.substring(resumeUrl.lastIndexOf('/') + 1);
+
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gray-50 py-24 sm:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative py-24 sm:py-32 bg-gray-50">
+        {personalInfo.hero?.backgroundImageUrl && (
+          <>
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${personalInfo.hero.backgroundImageUrl})` }}
+              aria-hidden="true"
+            ></div>
+            <div
+              className="absolute inset-0"
+              style={{ backgroundColor: personalInfo.hero.overlayColor }}
+              aria-hidden="true"
+            ></div>
+          </>
+        )}
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <img 
             src={personalInfo.profilePicUrl} 
             alt={personalInfo.name} 
@@ -41,7 +58,7 @@ const HomePage: React.FC = () => {
               href={resumeUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
-              download
+              download={resumeFilename}
               className="bg-white text-gray-800 px-8 py-4 rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-all transform hover:scale-105 font-bold text-lg border border-gray-300 flex items-center gap-2"
             >
               <DownloadIcon className="w-5 h-5" />
@@ -92,7 +109,7 @@ const HomePage: React.FC = () => {
             </div>
           ))}
         </div>
-      </Section>
+      </section>
       
       {/* Featured Projects Section */}
       <Section title="Featured Projects" className="bg-gray-50">
@@ -119,7 +136,7 @@ const HomePage: React.FC = () => {
             </div>
           ))}
         </div>
-      </Section>
+      </section>
     </div>
   );
 };
