@@ -8,7 +8,11 @@ export default {
     "./components/**/*.tsx",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'xl': '1440px',
+      },
+    },
   },
   plugins: [],
 }

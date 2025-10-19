@@ -15,11 +15,12 @@ const FloatingResumeButton: React.FC<FloatingResumeButtonProps> = ({ resumeUrl, 
             target="_blank"
             rel="noopener noreferrer"
             download={filename}
-            className="fixed right-0 bg-red-600 text-white px-10 py-5 rounded-l-lg shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 ease-in-out transform hover:scale-105 z-40 font-bold text-xl"
+            className="fixed right-4 bg-red-600 text-white py-3 px-5 xl:py-5 xl:px-10 rounded-lg shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 ease-in-out transform hover:scale-105 z-40 font-bold text-base xl:text-xl"
             style={{ bottom: `${bottomPosition}px` }}
             aria-label="Download Resume"
         >
-            Download Resume
+            <span className="xl:hidden">Resume</span>
+            <span className="hidden xl:inline">Download Resume</span>
         </a>
     );
 };
