@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { portfolioData } from '../data/portfolioData.ts';
-import Section from '../components/Section.tsx';
-import ProjectCard from '../components/ProjectCard.tsx';
-import DownloadIcon from '../components/icons/DownloadIcon.tsx';
+import { portfolioData } from '../data/portfolioData';
+import Section from '../components/Section';
+import ProjectCard from '../components/ProjectCard';
+import DownloadIcon from '../components/icons/DownloadIcon';
 
 const HomePage: React.FC = () => {
   const { personalInfo, skills, experience, education, projects, resumeUrl, curiosityProjectIds } = portfolioData;

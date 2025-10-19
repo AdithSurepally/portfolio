@@ -1,9 +1,9 @@
 import React from 'react';
-import { SocialLink, PersonalInfo } from '../types.ts';
-import LinkedinIcon from './icons/LinkedinIcon.tsx';
-import GithubIcon from './icons/GithubIcon.tsx';
-import MailIcon from './icons/MailIcon.tsx';
-import WhatsappIcon from './icons/WhatsappIcon.tsx';
+import { SocialLink, PersonalInfo } from '../types';
+import LinkedinIcon from './icons/LinkedinIcon';
+import GithubIcon from './icons/GithubIcon';
+import MailIcon from './icons/MailIcon';
+import WhatsappIcon from './icons/WhatsappIcon';
 
 interface FooterProps {
   socialLinks: SocialLink[];

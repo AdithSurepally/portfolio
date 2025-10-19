@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { portfolioData } from '../data/portfolioData.ts';
-import { Project } from '../types.ts';
-import Section from '../components/Section.tsx';
-import Lightbox from '../components/Lightbox.tsx';
+import { portfolioData } from '../data/portfolioData';
+import { Project } from '../types';
+import Section from '../components/Section';
+import Lightbox from '../components/Lightbox';
 
 const projectCategories = ['All', 'Training', 'Engineering Project', 'Internship', 'Casual'];
 type SortByType = 'Timeline' | 'Curiosity';

@@ -1,4 +1,4 @@
-import { PortfolioData } from '../types.ts';
+import { PortfolioData } from '../types';
 
 export const portfolioData: PortfolioData = {
   personalInfo: {

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from './components/Header.tsx';
-import Footer from './components/Footer.tsx';
-import HomePage from './pages/HomePage.tsx';
-import ProjectsPage from './pages/ProjectsPage.tsx';
-import FloatingResumeButton from './components/FloatingResumeButton.tsx';
-import FloatingSocials from './components/FloatingSocials.tsx';
-import { portfolioData } from './data/portfolioData.ts';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import ProjectsPage from './pages/ProjectsPage';
+import FloatingResumeButton from './components/FloatingResumeButton';
+import FloatingSocials from './components/FloatingSocials';
+import { portfolioData } from './data/portfolioData';
 
 const App: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);

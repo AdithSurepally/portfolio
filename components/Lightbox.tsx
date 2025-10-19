@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import CloseIcon from './icons/CloseIcon.tsx';
-import ChevronLeftIcon from './icons/ChevronLeftIcon.tsx';
-import ChevronRightIcon from './icons/ChevronRightIcon.tsx';
+import CloseIcon from './icons/CloseIcon';
+import ChevronLeftIcon from './icons/ChevronLeftIcon';
+import ChevronRightIcon from './icons/ChevronRightIcon';
 
 interface LightboxProps {
   images: string[];
