@@ -1,7 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const FloatingProjectsButton: React.FC = () => {
+  const location = useLocation();
+
+  // Do not render the button if the user is already on the projects page
+  if (location.pathname === '/projects') {
+    return null;
+  }
+
   return (
     <Link
       to="/projects"
