@@ -52,6 +52,7 @@ personalInfo: {
     -   The last number is the opacity (from 0.0 for fully transparent to 1.0 for fully opaque).
     -   **For a light shade:** Use `rgba(255, 255, 255, 0.8)` (white at 80% opacity).
     -   **For a dark shade:** Use `rgba(0, 0, 0, 0.5)` (black at 50% opacity).
+    -   **Note:** The text color will automatically adjust to be light or dark to maintain readability against your chosen overlay color!
 
 ### Professional Experience
 

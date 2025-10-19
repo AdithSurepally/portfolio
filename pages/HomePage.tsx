@@ -5,6 +5,33 @@ import Section from '../components/Section';
 import ProjectCard from '../components/ProjectCard';
 import DownloadIcon from '../components/icons/DownloadIcon';
 
+/**
+ * Determines if an RGBA color is dark based on its luminance.
+ * @param rgbaColor - The RGBA color string (e.g., "rgba(0, 0, 0, 0.5)").
+ * @returns True if the color is dark, false otherwise.
+ */
+const isColorDark = (rgbaColor: string | undefined): boolean => {
+  if (!rgbaColor || !rgbaColor.startsWith('rgba')) {
+    // Default to a light background if color is invalid or not provided.
+    return false;
+  }
+
+  // Extracts numbers from "rgba(r, g, b, a)"
+  const matches = rgbaColor.match(/(\d+(\.\d+)?)/g);
+
+  if (!matches || matches.length < 3) {
+    return false; // Invalid format
+  }
+
+  const [r, g, b] = matches.map(Number);
+
+  // Calculate luminance using the standard formula. A lower value is darker.
+  // The threshold of 140 is used to provide a good safety margin for readability.
+  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+  return luminance < 140;
+};
+
+
 const HomePage: React.FC = () => {
   const { personalInfo, skills, experience, education, projects, resumeUrl, curiosityProjectIds } = portfolioData;
 
@@ -13,6 +40,15 @@ const HomePage: React.FC = () => {
 
   // Extract filename from the URL path to ensure the correct name is suggested on download.
   const resumeFilename = resumeUrl.substring(resumeUrl.lastIndexOf('/') + 1);
+
+  // Check if the hero overlay is dark to adjust text color for contrast
+  const isOverlayDark = isColorDark(personalInfo.hero?.overlayColor);
+
+  const heroTextColorClasses = {
+    name: isOverlayDark ? 'text-white' : 'text-gray-900',
+    title: isOverlayDark ? 'text-red-400' : 'text-red-600',
+    summary: isOverlayDark ? 'text-gray-200' : 'text-gray-600',
+  };
 
   return (
     <div>
@@ -38,13 +74,13 @@ const HomePage: React.FC = () => {
             alt={personalInfo.name} 
             className="w-52 h-52 rounded-2xl mx-auto mb-6 border-4 border-white shadow-lg"
           />
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight ${heroTextColorClasses.name}`}>
             {personalInfo.name}
           </h1>
-          <p className="mt-4 text-xl sm:text-2xl text-red-600 font-semibold">
+          <p className={`mt-4 text-xl sm:text-2xl font-semibold ${heroTextColorClasses.title}`}>
             {personalInfo.title}
           </p>
-          <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
+          <p className={`mt-6 max-w-2xl mx-auto text-lg ${heroTextColorClasses.summary}`}>
             {personalInfo.summary}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
