@@ -48,6 +48,7 @@ const App: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
+      <FloatingProjectsButton />
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -59,7 +60,6 @@ const App: React.FC = () => {
       </div>
       <FloatingResumeButton resumeUrl={portfolioData.resumeUrl} bottomPosition={bottomPosition} />
       <FloatingSocials socialLinks={portfolioData.socialLinks} bottomPosition={bottomPosition} />
-      <FloatingProjectsButton />
     </div>
   );
 };
