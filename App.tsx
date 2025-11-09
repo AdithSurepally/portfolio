@@ -11,7 +11,7 @@ import FloatingProjectsButton from './components/FloatingProjectsButton';
 
 const App: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);
-  const [bottomPosition, setBottomPosition] = useState(24); // Default: 24px
+  const [bottomPosition, setBottomPosition] = useState(24);
 
   useEffect(() => {
     const footerEl = footerRef.current;
@@ -22,22 +22,34 @@ const App: React.FC = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
+        let newPosition = defaultBottom;
+
         if (entry.isIntersecting) {
-          // Footer is visible. Calculate how much it pushes the button up.
-          // The overlap is the distance from the viewport bottom to the footer's top edge.
-          const overlap = window.innerHeight - entry.boundingClientRect.top;
-          setBottomPosition(overlap > 0 ? overlap + defaultBottom : defaultBottom);
-        } else {
-          // Footer is not visible. If it's below the viewport, reset to default.
-          if (entry.boundingClientRect.top > window.innerHeight) {
-            setBottomPosition(defaultBottom);
+          const footerTop = entry.boundingClientRect.top;
+          const viewportHeight = window.innerHeight;
+          const overlap = viewportHeight - footerTop;
+          
+          // We only care about overlap at the bottom of the screen
+          if (overlap > 0) {
+            newPosition = overlap + defaultBottom;
           }
         }
+        
+        // Round the position to the nearest integer to prevent sub-pixel feedback loops.
+        const roundedPosition = Math.round(newPosition);
+        
+        // Use functional update to compare with the previous state and avoid re-renders.
+        setBottomPosition(prev => {
+          if (prev === roundedPosition) {
+            return prev; // No change, prevents the re-render loop
+          }
+          return roundedPosition;
+        });
       },
       {
-        root: null, // relative to the viewport
+        root: null,
         rootMargin: '0px',
-        // Create a threshold for every percentage point of visibility for smooth transitions
+        // Use a high-resolution threshold for a smooth transition effect
         threshold: Array.from({ length: 101 }, (_, i) => i / 100),
       }
     );
