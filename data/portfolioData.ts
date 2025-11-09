@@ -11,7 +11,7 @@ export const portfolioData: PortfolioData = {
     aboutMe: "I'm a curious and driven engineer, passionate about understanding the intricate workings of integrated circuits. My goal is to contribute to cutting-edge analog designs and continuously learn in the ever-evolving world of semiconductor technology.",
     hero: {
       backgroundImageUrl: '/images/hero-background.jpg',
-      overlayColor: 'rgba(255, 255, 255, 0.85)', // A light overlay to keep text readable
+      overlayColor: 'rgba(255, 255, 255, 0.21)', // A light overlay to keep text readable
     },
   },
   socialLinks: [
