@@ -6,29 +6,58 @@ import ProjectCard from '../components/ProjectCard';
 import DownloadIcon from '../components/icons/DownloadIcon';
 
 /**
- * Determines if an RGBA color is dark based on its luminance.
- * @param rgbaColor - The RGBA color string (e.g., "rgba(0, 0, 0, 0.5)").
- * @returns True if the color is dark, false otherwise.
+ * Determines optimal text and shadow classes for hero text based on the overlay color.
+ * If the overlay is highly transparent (alpha < 0.5), it defaults to light text with
+ * a strong shadow, as the background image is the dominant visual element.
+ * Otherwise, it bases the text color on the overlay's luminance.
+ *
+ * @param rgbaColor - The RGBA color string (e.g., "rgba(255, 255, 255, 0.33)").
+ * @returns An object with textColorClasses and textShadowClass.
  */
-const isColorDark = (rgbaColor: string | undefined): boolean => {
+const getHeroTextStyles = (rgbaColor: string | undefined) => {
+  const defaultStyles = {
+    textColorClasses: {
+      name: 'text-gray-900',
+      title: 'text-red-600',
+      summary: 'text-gray-600',
+    },
+    textShadowClass: 'text-shadow-dark',
+  };
+
   if (!rgbaColor || !rgbaColor.startsWith('rgba')) {
-    // Default to a light background if color is invalid or not provided.
-    return false;
+    return defaultStyles;
   }
 
-  // Extracts numbers from "rgba(r, g, b, a)"
   const matches = rgbaColor.match(/(\d+(\.\d+)?)/g);
-
-  if (!matches || matches.length < 3) {
-    return false; // Invalid format
+  if (!matches || matches.length < 4) { // Expect r, g, b, a
+    return defaultStyles;
   }
 
-  const [r, g, b] = matches.map(Number);
+  const [r, g, b, a] = matches.map(Number);
 
-  // Calculate luminance using the standard formula. A lower value is darker.
-  // The threshold of 140 is used to provide a good safety margin for readability.
+  const lightTextStyles = {
+    textColorClasses: {
+      name: 'text-white',
+      title: 'text-red-400', // A vibrant red that works on dark backgrounds
+      summary: 'text-gray-200',
+    },
+    textShadowClass: 'text-shadow-light',
+  };
+
+  // If overlay is highly transparent, the background image dictates contrast.
+  // White text with a strong shadow is the safest bet for readability.
+  if (a < 0.5) {
+    return lightTextStyles;
+  }
+
+  // For more opaque overlays, check the luminance of the color itself.
   const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-  return luminance < 140;
+  if (luminance < 140) { // Dark overlay
+    return lightTextStyles;
+  }
+  
+  // Light, opaque overlay
+  return defaultStyles;
 };
 
 
@@ -41,20 +70,10 @@ const HomePage: React.FC = () => {
   // Extract filename from the URL path to ensure the correct name is suggested on download.
   const resumeFilename = resumeUrl.substring(resumeUrl.lastIndexOf('/') + 1);
 
-  // Check if the hero overlay is dark to adjust text color for contrast
-  const isOverlayDark = isColorDark(personalInfo.hero?.overlayColor);
-
-  const heroTextColorClasses = {
-    name: isOverlayDark ? 'text-white' : 'text-gray-900',
-    title: isOverlayDark ? 'text-red-400' : 'text-red-600',
-    summary: isOverlayDark ? 'text-gray-200' : 'text-gray-600',
-  };
-
-  // Add a text shadow for better readability if a background image is present.
+  // Determine text styles based on hero overlay color and transparency
   const hasBackgroundImage = !!personalInfo.hero?.backgroundImageUrl;
-  const textShadowClass = hasBackgroundImage
-    ? (isOverlayDark ? 'text-shadow-light' : 'text-shadow-dark')
-    : '';
+  const { textColorClasses: heroTextColorClasses, textShadowClass: baseTextShadowClass } = getHeroTextStyles(personalInfo.hero?.overlayColor);
+  const textShadowClass = hasBackgroundImage ? baseTextShadowClass : '';
 
   return (
     <div>
