@@ -10,13 +10,13 @@ type SortByType = 'Timeline' | 'Curiosity';
 const ProjectsPage: React.FC = () => {
   const { projects, curiosityProjectIds } = portfolioData;
 
-  const [lightboxData, setLightboxData] = useState<{ images: string[]; startIndex: number } | null>(null);
+  const [lightboxData, setLightboxData] = useState<{ images: { src: string; label: string }[]; startIndex: number } | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
   const [sortBy, setSortBy] = useState<SortByType>('Timeline');
 
   const openLightbox = (project: Project, imageIndex: number) => {
     setLightboxData({
-      images: [project.schematicImg, project.layoutImg],
+      images: project.images,
       startIndex: imageIndex,
     });
   };
@@ -42,6 +42,48 @@ const ProjectsPage: React.FC = () => {
     // Default sort by date (Timeline)
     return [...filtered].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [projects, activeCategory, sortBy, curiosityProjectIds]);
+
+  const ProjectCard = ({ project }: { project: Project }) => (
+    <div key={project.id} id={project.id} className="bg-white p-6 sm:p-8 rounded-lg shadow-lg border border-gray-200 transition-shadow hover:shadow-xl">
+      <div className="mb-6">
+        <h3 className="text-3xl font-bold text-gray-900 break-words">{project.title}</h3>
+        <p className="text-lg text-red-600 font-semibold mt-1">{project.subtitle}</p>
+        <p className="mt-4 text-gray-600">{project.description}</p>
+      </div>
+
+      <div className={`grid grid-cols-1 ${project.subCategory === 'Analog' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-8 mb-8`}>
+        {project.images.map((image, index) => (
+          <div key={image.src}>
+            <h4 className="text-xl font-semibold mb-3 text-center text-gray-800">{image.label}</h4>
+            <img 
+              src={image.src} 
+              alt={`${project.title} ${image.label}`} 
+              className="w-full h-auto rounded-md shadow-md object-cover border-2 border-gray-200 cursor-pointer transition-transform hover:scale-105"
+              onClick={() => openLightbox(project, index)}
+            />
+          </div>
+        ))}
+      </div>
+      
+      <div className="mb-6">
+        <h4 className="text-xl font-semibold mb-3 text-gray-800">Key Learnings</h4>
+        <ul className="space-y-2 list-disc list-inside text-gray-700">
+          {project.keyLearnings.map((learning, i) => (
+            <li key={i}>{learning}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4 className="text-xl font-semibold mb-3 text-gray-800">Technologies Used</h4>
+        <div className="flex flex-wrap gap-2">
+          {project.technologies.map(tech => (
+            <span key={tech} className="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">{tech}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -82,57 +124,33 @@ const ProjectsPage: React.FC = () => {
             </div>
             )}
         </div>
-
-        <div className="space-y-12">
-            {filteredAndSortedProjects.map((project) => (
-                <div key={project.id} id={project.id} className="bg-white p-6 sm:p-8 rounded-lg shadow-lg border border-gray-200 transition-shadow hover:shadow-xl">
-                <div className="mb-6">
-                    <h3 className="text-3xl font-bold text-gray-900 break-words">{project.title}</h3>
-                    <p className="text-lg text-red-600 font-semibold mt-1">{project.subtitle}</p>
-                    <p className="mt-4 text-gray-600">{project.description}</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                    <div>
-                    <h4 className="text-xl font-semibold mb-3 text-center text-gray-800">Schematic</h4>
-                    <img 
-                        src={project.schematicImg} 
-                        alt={`${project.title} Schematic`} 
-                        className="w-full h-auto rounded-md shadow-md object-cover border-2 border-gray-200 cursor-pointer transition-transform hover:scale-105"
-                        onClick={() => openLightbox(project, 0)}
-                    />
-                    </div>
-                    <div>
-                    <h4 className="text-xl font-semibold mb-3 text-center text-gray-800">Layout</h4>
-                    <img 
-                        src={project.layoutImg} 
-                        alt={`${project.title} Layout`} 
-                        className="w-full h-auto rounded-md shadow-md object-cover border-2 border-gray-200 cursor-pointer transition-transform hover:scale-105"
-                        onClick={() => openLightbox(project, 1)}
-                    />
-                    </div>
-                </div>
-                
-                <div className="mb-6">
-                    <h4 className="text-xl font-semibold mb-3 text-gray-800">Key Learnings</h4>
-                    <ul className="space-y-2 list-disc list-inside text-gray-700">
-                    {project.keyLearnings.map((learning, i) => (
-                        <li key={i}>{learning}</li>
-                    ))}
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 className="text-xl font-semibold mb-3 text-gray-800">Technologies Used</h4>
-                    <div className="flex flex-wrap gap-2">
-                    {project.technologies.map(tech => (
-                        <span key={tech} className="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">{tech}</span>
-                    ))}
-                    </div>
-                </div>
-                </div>
-            ))}
-        </div>
+        
+        {activeCategory === 'Training' ? (
+          <>
+            <div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-8 mt-12 border-b-2 border-red-200 pb-2">Digital Standard Cells</h2>
+              <div className="space-y-12">
+                {filteredAndSortedProjects
+                  .filter(p => p.subCategory === 'Digital')
+                  .map(project => <ProjectCard key={project.id} project={project} />)
+                }
+              </div>
+            </div>
+            <div className="mt-16">
+              <h2 className="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-red-200 pb-2">Analog Blocks</h2>
+              <div className="space-y-12">
+                {filteredAndSortedProjects
+                  .filter(p => p.subCategory === 'Analog')
+                  .map(project => <ProjectCard key={project.id} project={project} />)
+                }
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="space-y-12">
+            {filteredAndSortedProjects.map(project => <ProjectCard key={project.id} project={project} />)}
+          </div>
+        )}
       </Section>
       {lightboxData && (
         <Lightbox

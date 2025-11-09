@@ -11,7 +11,7 @@ export const portfolioData: PortfolioData = {
     aboutMe: "I'm a curious and driven engineer, passionate about understanding the intricate workings of integrated circuits. My goal is to contribute to cutting-edge analog designs and continuously learn in the ever-evolving world of semiconductor technology.",
     hero: {
       backgroundImageUrl: '/images/hero-background.jpg',
-      overlayColor: 'rgba(29, 29, 29, 0.51)', // A light overlay to keep text readable
+      overlayColor: 'rgba(255, 255, 255, 0.85)', // A light overlay to keep text readable
     },
   },
   socialLinks: [
@@ -43,23 +43,223 @@ export const portfolioData: PortfolioData = {
     },
   ],
   projects: [
+    // --- DIGITAL STANDARD CELLS ---
     {
-      id: 'analog-portfolio',
-      title: 'Analog & Standard Cell Layout Portfolio (90nm CMOS)',
-      subtitle: 'MosChip Training Program',
+      id: 'inverter',
+      title: 'Inverter',
+      subtitle: 'Standard Cell',
       category: 'Training',
-      date: '2025-10-15',
-      description: 'Executed the complete physical layout (floorplanning, placement, routing, and PVS/Assura verification) for a diverse portfolio of industry-standard circuits.',
-      schematicImg: '/images/analog-portfolio-schematic.png',
-      layoutImg: '/images/analog-portfolio-layout.png',
-      keyLearnings: [
-        'Deep understanding of the full physical layout flow, from floorplanning to final verification.',
-        'Expertise in common-centroid matching techniques for high-precision analog blocks like Op-Amps and Bandgap References.',
-        'Implementation of complex analog circuits like Phase-Locked Loops (PLL).',
-        'Advanced techniques for deep N-well isolation to mitigate noise and improve circuit performance.',
+      subCategory: 'Digital',
+      date: '2025-08-15',
+      description: 'Designed and laid out a high-density 9T inverter cell, focusing on manufacturability, robust framework definition, and correct abutment rules for seamless integration.',
+      images: [
+        { src: '/images/digital/layout/inverter_layout.png', label: 'Layout' },
+        { src: '/images/digital/schematic/inverter_sch.png', label: 'Schematic' }
       ],
-      technologies: ['Cadence Virtuoso', 'PVS/Assura', '90nm CMOS', 'Op-Amp', 'BGR', 'DAC', 'PLL'],
+      keyLearnings: [
+        'Analyzed and implemented an optimized 9-transistor (9T) cell structure.',
+        'Mastered foundry process rules by correctly identifying, managing, and routing with fabricable vs. non-fabricable layers.',
+        'Established a robust and compliant cell framework by defining the Pin/Routing (PR) boundary, setting the cell origin, and applying half-DRC rules for correct abutment.',
+        'Developed a matrix-form layout, optimizing for high density, efficient routability, and N-well sharing.',
+      ],
+      technologies: ['Cadence Virtuoso', 'Layout Design', 'Standard Cell', '90nm CMOS', 'DRC/LVS'],
     },
+    {
+      id: 'nor-gate',
+      title: 'NOR Gate',
+      subtitle: 'Standard Cell',
+      category: 'Training',
+      subCategory: 'Digital',
+      date: '2025-08-18',
+      description: 'Translated a NOR gate schematic into an efficient, area-constrained layout using systematic stick diagram rules and strategic pin placement to enhance routability.',
+      images: [
+        { src: '/images/digital/layout/nor_layout.png', label: 'Layout' },
+        { src: '/images/digital/schematic/nor_sch.png', label: 'Schematic' }
+      ],
+      keyLearnings: [
+        'Applied systematic stick diagram rules to translate a schematic into an efficient and DRC-clean layout topology.',
+        'Mastered strategic pin placement and orientation to enhance top-level routability and seamless cell integration.',
+        'Successfully engineered the layout to meet strict area constraints without compromising cell performance.',
+        'Implemented N-well sharing techniques within a matrix structure to significantly improve layout density.',
+      ],
+      technologies: ['Stick Diagrams', 'Pin Placement', 'Area Optimization', 'Cadence Virtuoso'],
+    },
+    {
+      id: 'nand-gate',
+      title: 'NAND Gate',
+      subtitle: 'Standard Cell',
+      category: 'Training',
+      subCategory: 'Digital',
+      date: '2025-08-21',
+      description: 'Engineered a NAND gate layout with a focus on material optimization, circuit reliability, and electromigration risk mitigation through robust latchup prevention and current flow control.',
+      images: [
+        { src: '/images/digital/layout/nand_layout.png', label: 'Layout' },
+        { src: '/images/digital/schematic/nand_sch.png', label: 'Schematic' }
+      ],
+      keyLearnings: [
+        'Analyzed and optimized material usage (e.g., polysilicon, metal layers) to balance routing efficiency, performance, and manufacturability.',
+        'Demonstrated a strong understanding of circuit reliability by implementing robust latchup prevention structures (guard rings, substrate taps).',
+        'Engineered the layout to manage and control current flow direction, mitigating electromigration (EM) risks.',
+      ],
+      technologies: ['Latch-up Prevention', 'Guard Rings', 'Electromigration (EM)', 'Cadence Virtuoso'],
+    },
+    {
+      id: 'and-gate',
+      title: 'AND Gate',
+      subtitle: 'Standard Cell',
+      category: 'Training',
+      subCategory: 'Digital',
+      date: '2025-08-24',
+      description: 'Developed an AND gate layout by mastering optimal contact placement to minimize parasitics and creating enhanced routing strategies to solve complex connectivity challenges.',
+      images: [
+        { src: '/images/digital/layout/and_layout.png', label: 'Layout' },
+        { src: '/images/digital/schematic/and_sch.png', label: 'Schematic' }
+      ],
+      keyLearnings: [
+        'Mastered optimal contact placement strategies to minimize parasitic resistance and improve manufacturing yield.',
+        'Initiated and developed enhanced routing strategies to solve complex connectivity challenges in combinatorial logic.',
+      ],
+      technologies: ['Contact Placement', 'Parasitic Resistance', 'Routing Strategy', 'Cadence Virtuoso'],
+    },
+    {
+      id: 'or-gate',
+      title: 'OR Gate',
+      subtitle: 'Standard Cell',
+      category: 'Training',
+      subCategory: 'Digital',
+      date: '2025-08-27',
+      description: 'Implemented an OR gate layout demonstrating expertise in strategic layer selection to optimize routing density and reduce parasitic capacitance, using interdigitation to improve transistor performance.',
+      images: [
+        { src: '/images/digital/layout/or_layout.png', label: 'Layout' },
+        { src: '/images/digital/schematic/or_sch.png', label: 'Schematic' }
+      ],
+      keyLearnings: [
+        'Demonstrated expertise in strategic layer placement and selection to optimize routing density and reduce parasitic capacitance.',
+        'Successfully implemented "fingering" (interdigitation) techniques to improve transistor matching and drive strength.',
+      ],
+      technologies: ['Interdigitation', 'Parasitic Capacitance', 'Layer Selection', 'Cadence Virtuoso'],
+    },
+    {
+      id: 'xnor-gate',
+      title: 'XNOR Gate',
+      subtitle: 'Standard Cell',
+      category: 'Training',
+      subCategory: 'Digital',
+      date: '2025-08-30',
+      description: 'Successfully managed and resolved high routing complexity to deliver a compact and fully verified DRC/LVS-clean layout for a complex combinatorial XNOR cell.',
+      images: [
+        { src: '/images/digital/layout/xnor_layout.png', label: 'Layout' },
+        { src: '/images/digital/schematic/xnor_sch.png', label: 'Schematic' }
+      ],
+      keyLearnings: [
+        'Successfully managed and resolved high routing complexity, delivering a compact and DRC/LVS-clean layout for a complex combinatorial cell.',
+      ],
+      technologies: ['Complex Routing', 'Combinatorial Logic', 'DRC/LVS Clean', 'Cadence Virtuoso'],
+    },
+    {
+      id: 'dff',
+      title: 'D-Flip-Flop (DFF)',
+      subtitle: 'Standard Cell',
+      category: 'Training',
+      subCategory: 'Digital',
+      date: '2025-09-05',
+      description: 'Applied advanced "carving" techniques to create intricate, dense, and DRC-compliant shapes for a DFF, systematically solving the significant routing complexity inherent in sequential cells.',
+      images: [
+        { src: '/images/digital/layout/dff_layout.png', label: 'Layout' },
+        { src: '/images/digital/schematic/dff_sch.png', label: 'Schematic' }
+      ],
+      keyLearnings: [
+        'Learned and applied advanced "carving" techniques to create intricate, highly dense, and DRC-compliant layout shapes for sequential logic.',
+        'Systematically tackled and solved the significant routing complexity inherent in stateful, sequential cells.',
+      ],
+      technologies: ['Sequential Logic', 'Layout Carving', 'Stateful Cells', 'Cadence Virtuoso'],
+    },
+    // --- ANALOG CELLS ---
+    {
+      id: 'level-shifter',
+      title: 'Level Shifter',
+      subtitle: 'Analog Block',
+      category: 'Training',
+      subCategory: 'Analog',
+      date: '2025-09-10',
+      description: 'Implemented a level shifter with advanced Deep N-Well isolation to prevent substrate noise coupling between voltage domains, applying DFM principles for a high-yield, robust analog cell.',
+      images: [
+        { src: '/images/analog/floorplan/level_shifter_floorplan.png', label: 'Floorplan' },
+        { src: '/images/analog/schematic/level_shifter_sch.png', label: 'Schematic' },
+        { src: '/images/analog/layout/level_shifter_layout.png', label: 'Layout' }
+      ],
+      keyLearnings: [
+        'Successfully implemented advanced isolation techniques, including Deep N-Well (DNW), to prevent substrate noise coupling between different voltage domains.',
+        'Applied critical Design for Manufacturability (DFM) principles to ensure a high-yield, robust, and reliable analog cell.',
+        'Demonstrated high proficiency in schematic-driven layout (SDL) methodologies using the Cadence Virtuoso Layout XL environment for guaranteed LVS correctness.',
+      ],
+      technologies: ['Deep N-Well', 'DFM', 'Schematic-Driven Layout (SDL)', 'Cadence Virtuoso XL'],
+    },
+    {
+      id: 'common-amplifier',
+      title: 'Common Source Amplifier',
+      subtitle: 'Analog Block',
+      category: 'Training',
+      subCategory: 'Analog',
+      date: '2025-09-20',
+      description: 'Executed a high-precision layout for a common source amplifier by implementing a full suite of advanced analog techniques, including noise mitigation, precision matching, and DFM.',
+      images: [
+        { src: '/images/analog/floorplan/common_amplifier_floorplan.png', label: 'Floorplan' },
+        { src: '/images/analog/schematic/common_amplifier_sch.png', label: 'Schematic' },
+        { src: '/images/analog/layout/common_amplifier_layout.png', label: 'Layout' }
+      ],
+      keyLearnings: [
+        'Executed a high-precision layout by implementing a full suite of advanced analog techniques, including:',
+        'Noise Mitigation: Utilized metal shielding for sensitive nets and implemented guard rings for isolation.',
+        'Precision Matching: Deployed cross-coupled common-centroid structures, gradient matching, and chirality (identical orientation) to cancel process variations.',
+        'Manufacturability: Strategically placed dummy devices to ensure a uniform etching environment for critical transistors.',
+        'Demonstrated strategic planning by prioritizing a detailed floorplan to manage signal flow, matching, and isolation pathways.',
+        'Ensured minimal and symmetrical routing for all critical nets (e.g., differential pair) to maintain high performance (CMRR, offset).',
+        'Successfully delivered the complex analog layout within all specified area constraints.',
+      ],
+      technologies: ['Common-Centroid', 'Shielding', 'Guard Rings', 'Dummy Devices', 'Floorplanning'],
+    },
+    {
+      id: 'bandgap-ref',
+      title: 'Bandgap Reference',
+      subtitle: 'Analog Block',
+      category: 'Training',
+      subCategory: 'Analog',
+      date: '2025-09-28',
+      description: 'Executed a meticulous, high-precision layout for a BGR, focusing on transistor array matching and complex routing for specialized components to achieve target voltage accuracy.',
+      images: [
+        { src: '/images/analog/floorplan/bandgap_ref_floorplan.png', label: 'Floorplan' },
+        { src: '/images/analog/schematic/bandgap_ref_sch.png', label: 'Schematic' },
+        { src: '/images/analog/layout/bandgap_ref_layout.png', label: 'Layout' }
+      ],
+      keyLearnings: [
+        'Successfully executed meticulous, high-precision matching for a large array of transistors, critical for achieving target voltage accuracy.',
+        'Managed and implemented complex, low-parasitic routing for specialized components, including precision resistors and BJT devices.',
+        'Ensured foundry compliance and manufacturability by inserting metal fill cells in low-density areas, guaranteeing CMP (Chemical-Mechanical Planarization) planarity.',
+      ],
+      technologies: ['Precision Matching', 'BJT Layout', 'Metal Fill', 'CMP', 'Cadence Virtuoso'],
+    },
+    {
+      id: 'dac',
+      title: 'Digital-to-Analog Converter (DAC)',
+      subtitle: 'Analog Block',
+      category: 'Training',
+      subCategory: 'Analog',
+      date: '2025-10-10',
+      description: 'Engineered a DAC layout using a hierarchical, sub-block-based approach for modularity, managing a complex power domain strategy with robust Deep N-Well isolation.',
+      images: [
+        { src: '/images/analog/floorplan/dac_floorplan.png', label: 'Floorplan' },
+        { src: '/images/analog/schematic/dac_sch.png', label: 'Schematic' },
+        { src: '/images/analog/layout/dac_layout.png', label: 'Layout' }
+      ],
+      keyLearnings: [
+        'Engineered the layout using a hierarchical, sub-block-based approach for modularity, reusability, and scalability.',
+        'Managed a complex power domain strategy involving four distinct voltage sources, using Deep N-Well for robust isolation between analog and digital sections.',
+        'Ensured high-precision analog performance by implementing component cloning, strategic dummy placement, and minimal, shielded routing for all critical analog nets.',
+      ],
+      technologies: ['Hierarchical Layout', 'Power Domains', 'Component Cloning', 'Deep N-Well'],
+    },
+    // --- OTHER PROJECTS ---
     {
       id: 'crypto-multiplier',
       title: 'VLSI Implementation of a Cryptographic RNB Multiplier',
@@ -67,8 +267,10 @@ export const portfolioData: PortfolioData = {
       category: 'Engineering Project',
       date: '2024-05-20',
       description: 'Designed the complete schematic-level architecture for multiple configurations (SISO, SIPO, PISO, PIPO) of a Residue Number System (RNS) based multiplier using the Cadence Virtuoso editor. Validated the circuit\'s logical correctness through simulation.',
-      schematicImg: '/images/crypto-multiplier-schematic.png',
-      layoutImg: '/images/crypto-multiplier-layout.png',
+      images: [
+          { src: '/images/crypto-multiplier-layout.png', label: 'Layout' },
+          { src: '/images/crypto-multiplier-schematic.png', label: 'Schematic' },
+      ],
       keyLearnings: [
         'Developed a strong grasp of digital design principles in a VLSI context.',
         'Gained experience in schematic-level architecture design for complex digital systems.',
@@ -83,8 +285,10 @@ export const portfolioData: PortfolioData = {
       category: 'Internship',
       date: '2023-06-10',
       description: 'Designed and assembled a prototype for an RFID-based locker system, integrating microcontrollers with RF readers and actuators, enhanced with a SIM 800C GSM Module for remote notifications.',
-      schematicImg: '/images/rfid-locker-schematic.png',
-      layoutImg: '/images/rfid-locker-prototype.png',
+      images: [
+        { src: '/images/rfid-locker-prototype.png', label: 'Prototype' },
+        { src: '/images/rfid-locker-schematic.png', label: 'Schematic' },
+      ],
       keyLearnings: [
         'Practical experience in system integration with microcontrollers, sensors, and actuators.',
         'Firmware development for embedded systems.',
@@ -99,46 +303,16 @@ export const portfolioData: PortfolioData = {
       category: 'Casual',
       date: '2023-11-25',
       description: 'Designed and simulated a high-gain telescopic operational amplifier in a 180nm CMOS process. Focused on achieving high DC gain and a wide bandwidth while maintaining stability.',
-      schematicImg: '/images/opamp-design-schematic.png',
-      layoutImg: '/images/opamp-design-layout.png',
+      images: [
+        { src: '/images/opamp-design-layout.png', label: 'Layout' },
+        { src: '/images/opamp-design-schematic.png', label: 'Schematic' },
+      ],
       keyLearnings: [
         'In-depth understanding of telescopic amplifier topology and its trade-offs.',
         'AC and transient analysis for operational amplifiers.',
         'Layout techniques for matching and noise reduction in sensitive analog circuits.',
       ],
       technologies: ['Cadence Virtuoso', 'Spectre', '180nm CMOS', 'Analog Design'],
-    },
-    {
-      id: 'level-shifter',
-      title: 'Level Shifter Design',
-      subtitle: 'MosChip Training Module',
-      category: 'Training',
-      date: '2025-09-01',
-      description: 'Created a full-custom layout for a level shifter, enabling communication between different voltage domains. Utilized deep N-well isolation techniques to prevent latch-up.',
-      schematicImg: '/images/level-shifter-schematic.png',
-      layoutImg: '/images/level-shifter-layout.png',
-      keyLearnings: [
-        'Importance of level shifters in multi-voltage domain SoCs.',
-        'Techniques to handle mixed-signal interfaces.',
-        'Layout strategies for latch-up prevention in I/O cells.',
-      ],
-      technologies: ['Cadence Virtuoso', 'Layout Design', 'Deep N-well', '90nm CMOS'],
-    },
-     {
-      id: 'bandgap-ref',
-      title: 'Bandgap Reference (BGR) Layout',
-      subtitle: 'Key Analog Block',
-      category: 'Training',
-      date: '2025-09-22',
-      description: 'Successfully laid out a Bandgap Reference circuit, focusing on common-centroid matching to ensure a stable voltage reference across process, voltage, and temperature (PVT) variations.',
-      schematicImg: '/images/bandgap-ref-schematic.png',
-      layoutImg: '/images/bandgap-ref-layout.png',
-      keyLearnings: [
-        'Critical importance of matching in precision analog circuits.',
-        'Layout techniques to minimize the effects of thermal gradients and process variations.',
-        'Verification of analog circuits to meet strict performance criteria.',
-      ],
-      technologies: ['Common-Centroid Matching', 'Cadence Virtuoso', 'PVS', 'Analog Layout'],
     }
   ],
   education: [

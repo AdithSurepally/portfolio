@@ -4,7 +4,7 @@ import ChevronLeftIcon from './icons/ChevronLeftIcon';
 import ChevronRightIcon from './icons/ChevronRightIcon';
 
 interface LightboxProps {
-  images: string[];
+  images: { src: string; label: string; }[];
   startIndex: number;
   onClose: () => void;
 }
@@ -52,8 +52,11 @@ const Lightbox: React.FC<LightboxProps> = ({ images, startIndex, onClose }) => {
         </button>
 
         {/* Image Display */}
-        <div className="relative max-w-screen-lg max-h-[90vh]">
-          <img src={images[currentIndex]} alt={`Project image ${currentIndex + 1}`} className="max-h-[90vh] max-w-full object-contain rounded-lg shadow-2xl"/>
+        <div className="relative max-w-screen-lg max-h-[90vh] flex flex-col items-center justify-center">
+          <img src={images[currentIndex].src} alt={`${images[currentIndex].label} for project, image ${currentIndex + 1}`} className="max-h-[85vh] max-w-full object-contain rounded-lg shadow-2xl"/>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black bg-opacity-60 text-white px-4 py-1 rounded-full text-center">
+            <p className="text-md font-semibold">{images[currentIndex].label}</p>
+          </div>
         </div>
 
         {/* Next Button */}

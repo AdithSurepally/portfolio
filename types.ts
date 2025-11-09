@@ -1,4 +1,5 @@
 
+
 export interface PersonalInfo {
   name: string;
   title: string;
@@ -30,9 +31,9 @@ export interface Project {
   title: string;
   subtitle: string;
   category: 'Training' | 'Engineering Project' | 'Internship' | 'Casual';
+  subCategory?: 'Digital' | 'Analog';
   description:string;
-  schematicImg: string;
-  layoutImg: string;
+  images: { src: string; label: string; }[];
   keyLearnings: string[];
   technologies: string[];
   date: string; // YYYY-MM-DD for sorting
