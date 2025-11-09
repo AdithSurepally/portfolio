@@ -14,6 +14,8 @@ const App: React.FC = () => {
   const [bottomPosition, setBottomPosition] = useState(24); // Default: 24px (corresponds to bottom-6)
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScrollAndResize = () => {
       if (!footerRef.current) return;
 
@@ -24,14 +26,19 @@ const App: React.FC = () => {
 
       const newPosition = overlap > 0 ? overlap + defaultBottom : defaultBottom;
 
-      setBottomPosition(currentPosition => {
-        // Only update state if the change is significant enough to prevent render loops.
-        // A 1px threshold is used to account for sub-pixel rendering differences.
-        if (Math.abs(currentPosition - newPosition) > 1) {
-          return newPosition;
-        }
-        return currentPosition;
-      });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setBottomPosition(currentPosition => {
+            // Only update state if the change is significant to prevent unnecessary renders.
+            if (Math.abs(currentPosition - newPosition) > 0.5) {
+              return newPosition;
+            }
+            return currentPosition;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScrollAndResize, { passive: true });

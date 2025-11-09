@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { portfolioData } from '../data/portfolioData';
 import { Project } from '../types';
 import Section from '../components/Section';
@@ -6,13 +6,21 @@ import Lightbox from '../components/Lightbox';
 
 const projectCategories = ['All', 'Training', 'Engineering Project', 'Internship', 'Casual'];
 type SortByType = 'Timeline' | 'Curiosity';
+type TrainingSubCategory = 'All' | 'Digital' | 'Analog';
+
 
 const ProjectsPage: React.FC = () => {
   const { projects, curiosityProjectIds } = portfolioData;
 
   const [lightboxData, setLightboxData] = useState<{ images: { src: string; label: string }[]; startIndex: number } | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [activeSubCategory, setActiveSubCategory] = useState<TrainingSubCategory>('All');
   const [sortBy, setSortBy] = useState<SortByType>('Timeline');
+  
+  // When the main category changes, reset the sub-category filter
+  useEffect(() => {
+    setActiveSubCategory('All');
+  }, [activeCategory]);
 
   const openLightbox = (project: Project, imageIndex: number) => {
     setLightboxData({
@@ -108,7 +116,7 @@ const ProjectsPage: React.FC = () => {
   return (
     <>
       <Section title="My Projects">
-        <div className="sticky top-20 z-30 bg-gray-50/95 backdrop-blur-sm py-4 rounded-xl shadow-sm flex flex-col items-center justify-center mb-12 space-y-4">
+        <div className="sticky top-[81px] z-30 bg-gray-50/95 backdrop-blur-sm py-4 rounded-xl shadow-sm flex flex-col items-center justify-center mb-12 space-y-4">
             {/* Category Filters */}
             <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
             {projectCategories.map(category => (
@@ -147,24 +155,45 @@ const ProjectsPage: React.FC = () => {
         
         {activeCategory === 'Training' ? (
           <>
-            <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-8 mt-12 border-b-2 border-red-200 pb-2">Digital Standard Cells</h2>
-              <div className="space-y-12">
-                {filteredAndSortedProjects
-                  .filter(p => p.subCategory === 'Digital')
-                  .map(project => <ProjectCard key={project.id} project={project} />)
-                }
-              </div>
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-10">
+                {(['All', 'Digital', 'Analog'] as TrainingSubCategory[]).map(subCat => (
+                    <button
+                        key={subCat}
+                        onClick={() => setActiveSubCategory(subCat)}
+                        className={`px-4 py-2 text-sm sm:text-base font-semibold rounded-full transition-all duration-300 ${
+                            activeSubCategory === subCat
+                            ? 'bg-red-500 text-white shadow-sm'
+                            : 'bg-white text-gray-600 hover:bg-red-100 border border-gray-300'
+                        }`}
+                    >
+                        {subCat === 'Digital' ? 'Digital Standard Cells' : subCat === 'Analog' ? 'Analog Blocks' : 'All'}
+                    </button>
+                ))}
             </div>
-            <div className="mt-16">
-              <h2 className="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-red-200 pb-2">Analog Blocks</h2>
-              <div className="space-y-12">
-                {filteredAndSortedProjects
-                  .filter(p => p.subCategory === 'Analog')
-                  .map(project => <ProjectCard key={project.id} project={project} />)
-                }
+
+            {(activeSubCategory === 'All' || activeSubCategory === 'Digital') && (
+              <div>
+                <h2 className="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-red-200 pb-2">Digital Standard Cells</h2>
+                <div className="space-y-12">
+                  {filteredAndSortedProjects
+                    .filter(p => p.subCategory === 'Digital')
+                    .map(project => <ProjectCard key={project.id} project={project} />)
+                  }
+                </div>
               </div>
-            </div>
+            )}
+            
+            {(activeSubCategory === 'All' || activeSubCategory === 'Analog') && (
+              <div className={activeSubCategory === 'All' ? 'mt-16' : ''}>
+                <h2 className="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-red-200 pb-2">Analog Blocks</h2>
+                <div className="space-y-12">
+                  {filteredAndSortedProjects
+                    .filter(p => p.subCategory === 'Analog')
+                    .map(project => <ProjectCard key={project.id} project={project} />)
+                  }
+                </div>
+              </div>
+            )}
           </>
         ) : (
           <div className="space-y-12">
