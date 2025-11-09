@@ -50,6 +50,12 @@ const HomePage: React.FC = () => {
     summary: isOverlayDark ? 'text-gray-200' : 'text-gray-600',
   };
 
+  // Add a text shadow for better readability if a background image is present.
+  const hasBackgroundImage = !!personalInfo.hero?.backgroundImageUrl;
+  const textShadowClass = hasBackgroundImage
+    ? (isOverlayDark ? 'text-shadow-light' : 'text-shadow-dark')
+    : '';
+
   return (
     <div>
       {/* Hero Section */}
@@ -74,13 +80,13 @@ const HomePage: React.FC = () => {
             alt={personalInfo.name} 
             className="w-52 h-52 rounded-2xl mx-auto mb-6 border-4 border-white shadow-lg"
           />
-          <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight ${heroTextColorClasses.name}`}>
+          <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight ${heroTextColorClasses.name} ${textShadowClass}`}>
             {personalInfo.name}
           </h1>
-          <p className={`mt-4 text-xl sm:text-2xl font-semibold ${heroTextColorClasses.title}`}>
+          <p className={`mt-4 text-xl sm:text-2xl font-semibold ${heroTextColorClasses.title} ${textShadowClass}`}>
             {personalInfo.title}
           </p>
-          <p className={`mt-6 max-w-2xl mx-auto text-lg ${heroTextColorClasses.summary}`}>
+          <p className={`mt-6 max-w-2xl mx-auto text-lg ${heroTextColorClasses.summary} ${textShadowClass}`}>
             {personalInfo.summary}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
