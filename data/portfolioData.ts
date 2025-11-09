@@ -184,9 +184,11 @@ export const portfolioData: PortfolioData = {
       date: '2025-09-10',
       description: 'Implemented a level shifter with advanced Deep N-Well isolation to prevent substrate noise coupling between voltage domains, applying DFM principles for a high-yield, robust analog cell.',
       images: [
-        { src: '/images/analog/floorplan/level_shifter_floorplan.png', label: 'Floorplan' },
         { src: '/images/analog/schematic/level_shifter_sch.png', label: 'Schematic' },
-        { src: '/images/analog/layout/level_shifter_layout.png', label: 'Layout' }
+        { src: '/images/analog/floorplan/level_shifter_floorplan_1.png', label: 'Floorplan 1' },
+        { src: '/images/analog/floorplan/level_shifter_floorplan_2.png', label: 'Floorplan 2' },
+        { src: '/images/analog/layout/levelshifter_layout_1.png', label: 'Layout 1' },
+        { src: '/images/analog/layout/levelshifter_layout_2.png', label: 'Layout 2' }
       ],
       keyLearnings: [
         'Successfully implemented advanced isolation techniques, including Deep N-Well (DNW), to prevent substrate noise coupling between different voltage domains.',

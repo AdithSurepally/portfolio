@@ -31,6 +31,26 @@ const ProjectsPage: React.FC = () => {
       filtered = projects.filter(p => p.category === activeCategory);
     }
 
+    if (activeCategory === 'Training') {
+      const digitalOrder = ['inverter', 'nand-gate', 'nor-gate', 'and-gate', 'or-gate', 'xnor-gate', 'dff'];
+      const analogOrder = ['level-shifter', 'common-amplifier', 'bandgap-ref', 'dac'];
+      
+      const getOrder = (project: Project) => {
+        if (project.subCategory === 'Digital') {
+          const index = digitalOrder.indexOf(project.id);
+          return index === -1 ? Infinity : index;
+        }
+        if (project.subCategory === 'Analog') {
+          const index = analogOrder.indexOf(project.id);
+          // Offset to ensure analog projects are sorted correctly within their own group
+          return index === -1 ? Infinity : index + digitalOrder.length; 
+        }
+        return Infinity;
+      };
+      
+      return [...filtered].sort((a, b) => getOrder(a) - getOrder(b));
+    }
+
     if (activeCategory === 'All' && sortBy === 'Curiosity') {
       const curiousProjects = filtered.filter(p => curiosityProjectIds.includes(p.id));
       const otherProjects = filtered.filter(p => !curiosityProjectIds.includes(p.id));
@@ -51,16 +71,16 @@ const ProjectsPage: React.FC = () => {
         <p className="mt-4 text-gray-600">{project.description}</p>
       </div>
 
-      <div className={`grid grid-cols-1 ${project.subCategory === 'Analog' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-8 mb-8`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8`}>
         {project.images.map((image, index) => (
-          <div key={image.src}>
-            <h4 className="text-xl font-semibold mb-3 text-center text-gray-800">{image.label}</h4>
+          <div key={image.src} className="flex flex-col items-center">
             <img 
               src={image.src} 
               alt={`${project.title} ${image.label}`} 
-              className="w-full h-auto rounded-md shadow-md object-cover border-2 border-gray-200 cursor-pointer transition-transform hover:scale-105"
+              className="w-full h-auto rounded-md shadow-md object-cover border-2 border-gray-200 cursor-pointer transition-transform hover:scale-105 mb-2"
               onClick={() => openLightbox(project, index)}
             />
+            <h4 className="text-md font-semibold text-center text-gray-800">{image.label}</h4>
           </div>
         ))}
       </div>

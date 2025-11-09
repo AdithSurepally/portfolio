@@ -22,11 +22,16 @@ const App: React.FC = () => {
       const overlap = scrollBottom - footerTop;
       const defaultBottom = 24;
 
-      if (overlap > 0) {
-        setBottomPosition(overlap + defaultBottom);
-      } else {
-        setBottomPosition(defaultBottom);
-      }
+      const newPosition = overlap > 0 ? overlap + defaultBottom : defaultBottom;
+
+      setBottomPosition(currentPosition => {
+        // Only update state if the change is significant enough to prevent render loops.
+        // A 1px threshold is used to account for sub-pixel rendering differences.
+        if (Math.abs(currentPosition - newPosition) > 1) {
+          return newPosition;
+        }
+        return currentPosition;
+      });
     };
 
     window.addEventListener('scroll', handleScrollAndResize, { passive: true });
