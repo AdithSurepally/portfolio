@@ -10,7 +10,7 @@ export interface PersonalInfo {
   aboutMe: string;
   hero?: {
     backgroundImageUrl: string;
-    overlayColor: string;
+    contentBoxColor?: string;
   };
 }
 

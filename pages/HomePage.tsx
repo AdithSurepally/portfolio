@@ -25,15 +25,13 @@ const HomePage: React.FC = () => {
               style={{ backgroundImage: `url(${personalInfo.hero.backgroundImageUrl})` }}
               aria-hidden="true"
             ></div>
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: personalInfo.hero.overlayColor }}
-              aria-hidden="true"
-            ></div>
           </>
         )}
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-sm p-8 sm:p-12 rounded-2xl shadow-2xl text-center">
+            <div 
+                className="max-w-4xl mx-auto backdrop-blur-sm p-8 sm:p-12 rounded-2xl shadow-2xl text-center"
+                style={{ backgroundColor: personalInfo.hero?.contentBoxColor || 'rgba(255, 255, 255, 0.95)' }}
+            >
                 <img 
                     src={personalInfo.profilePicUrl} 
                     alt={personalInfo.name} 
