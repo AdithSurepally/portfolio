@@ -49,8 +49,9 @@ const App: React.FC = () => {
       {
         root: null,
         rootMargin: '0px',
-        // Use a high-resolution threshold for a smooth transition effect
-        threshold: Array.from({ length: 101 }, (_, i) => i / 100),
+        // Use a less sensitive threshold to prevent jarring feedback loops on
+        // pages with dynamic height, while still providing a smooth transition.
+        threshold: Array.from({ length: 21 }, (_, i) => i / 20),
       }
     );
 
