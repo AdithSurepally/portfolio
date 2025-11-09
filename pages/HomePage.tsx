@@ -5,62 +5,6 @@ import Section from '../components/Section';
 import ProjectCard from '../components/ProjectCard';
 import DownloadIcon from '../components/icons/DownloadIcon';
 
-/**
- * Determines optimal text and shadow classes for hero text based on the overlay color.
- * If the overlay is highly transparent (alpha < 0.5), it defaults to light text with
- * a strong shadow, as the background image is the dominant visual element.
- * Otherwise, it bases the text color on the overlay's luminance.
- *
- * @param rgbaColor - The RGBA color string (e.g., "rgba(255, 255, 255, 0.33)").
- * @returns An object with textColorClasses and textShadowClass.
- */
-const getHeroTextStyles = (rgbaColor: string | undefined) => {
-  const defaultStyles = {
-    textColorClasses: {
-      name: 'text-gray-900',
-      title: 'text-red-600',
-      summary: 'text-gray-600',
-    },
-    textShadowClass: 'text-shadow-dark',
-  };
-
-  if (!rgbaColor || !rgbaColor.startsWith('rgba')) {
-    return defaultStyles;
-  }
-
-  const matches = rgbaColor.match(/(\d+(\.\d+)?)/g);
-  if (!matches || matches.length < 4) { // Expect r, g, b, a
-    return defaultStyles;
-  }
-
-  const [r, g, b, a] = matches.map(Number);
-
-  const lightTextStyles = {
-    textColorClasses: {
-      name: 'text-white',
-      title: 'text-red-400', // A vibrant red that works on dark backgrounds
-      summary: 'text-gray-200',
-    },
-    textShadowClass: 'text-shadow-light',
-  };
-
-  // If overlay is highly transparent, the background image dictates contrast.
-  // White text with a strong shadow is the safest bet for readability.
-  if (a < 0.5) {
-    return lightTextStyles;
-  }
-
-  // For more opaque overlays, check the luminance of the color itself.
-  const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-  if (luminance < 140) { // Dark overlay
-    return lightTextStyles;
-  }
-  
-  // Light, opaque overlay
-  return defaultStyles;
-};
-
-
 const HomePage: React.FC = () => {
   const { personalInfo, skills, experience, education, projects, resumeUrl, curiosityProjectIds } = portfolioData;
 
@@ -69,11 +13,6 @@ const HomePage: React.FC = () => {
 
   // Extract filename from the URL path to ensure the correct name is suggested on download.
   const resumeFilename = resumeUrl.substring(resumeUrl.lastIndexOf('/') + 1);
-
-  // Determine text styles based on hero overlay color and transparency
-  const hasBackgroundImage = !!personalInfo.hero?.backgroundImageUrl;
-  const { textColorClasses: heroTextColorClasses, textShadowClass: baseTextShadowClass } = getHeroTextStyles(personalInfo.hero?.overlayColor);
-  const textShadowClass = hasBackgroundImage ? baseTextShadowClass : '';
 
   return (
     <div>
@@ -93,39 +32,41 @@ const HomePage: React.FC = () => {
             ></div>
           </>
         )}
-        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <img 
-            src={personalInfo.profilePicUrl} 
-            alt={personalInfo.name} 
-            className="w-52 h-52 rounded-2xl mx-auto mb-6 border-4 border-white shadow-lg"
-          />
-          <h1 className={`text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight ${heroTextColorClasses.name} ${textShadowClass}`}>
-            {personalInfo.name}
-          </h1>
-          <p className={`mt-4 text-xl sm:text-2xl font-semibold ${heroTextColorClasses.title} ${textShadowClass}`}>
-            {personalInfo.title}
-          </p>
-          <p className={`mt-6 max-w-2xl mx-auto text-lg ${heroTextColorClasses.summary} ${textShadowClass}`}>
-            {personalInfo.summary}
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link 
-              to="/projects" 
-              className="bg-red-600 text-white px-8 py-4 rounded-lg shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all transform hover:scale-105 font-bold text-lg"
-            >
-              View My Work
-            </Link>
-            <a 
-              href={resumeUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              download={resumeFilename}
-              className="bg-white text-gray-800 px-8 py-4 rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-all transform hover:scale-105 font-bold text-lg border border-gray-300 flex items-center gap-2"
-            >
-              <DownloadIcon className="w-5 h-5" />
-              Download Resume
-            </a>
-          </div>
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-sm p-8 sm:p-12 rounded-2xl shadow-2xl text-center">
+                <img 
+                    src={personalInfo.profilePicUrl} 
+                    alt={personalInfo.name} 
+                    className="w-40 h-40 sm:w-52 sm:h-52 rounded-2xl mx-auto -mt-24 sm:-mt-36 mb-6 border-4 border-white shadow-lg"
+                />
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900">
+                    {personalInfo.name}
+                </h1>
+                <p className="mt-4 text-xl sm:text-2xl font-semibold text-red-600">
+                    {personalInfo.title}
+                </p>
+                <p className="mt-6 max-w-2xl mx-auto text-lg text-gray-700">
+                    {personalInfo.summary}
+                </p>
+                <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <Link 
+                    to="/projects" 
+                    className="bg-red-600 text-white px-8 py-4 rounded-lg shadow-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all transform hover:scale-105 font-bold text-lg"
+                    >
+                    View My Work
+                    </Link>
+                    <a 
+                    href={resumeUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    download={resumeFilename}
+                    className="bg-white text-gray-800 px-8 py-4 rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-all transform hover:scale-105 font-bold text-lg border border-gray-300 flex items-center gap-2"
+                    >
+                    <DownloadIcon className="w-5 h-5" />
+                    Download Resume
+                    </a>
+                </div>
+            </div>
         </div>
       </section>
 
