@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { SocialLink } from '../types';
 import LinkedinIcon from './icons/LinkedinIcon';
 import GithubIcon from './icons/GithubIcon';
@@ -7,7 +7,6 @@ import WhatsappIcon from './icons/WhatsappIcon';
 
 interface FloatingSocialsProps {
   socialLinks: SocialLink[];
-  bottomPosition: number;
 }
 
 const iconMap: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> } = {
@@ -17,11 +16,12 @@ const iconMap: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> } = {
   WhatsApp: WhatsappIcon,
 };
 
-const FloatingSocials: React.FC<FloatingSocialsProps> = ({ socialLinks, bottomPosition }) => {
+const FloatingSocials = forwardRef<HTMLDivElement, FloatingSocialsProps>(({ socialLinks }, ref) => {
   return (
     <div 
-      className="fixed left-4 z-40 transition-all duration-300 ease-in-out"
-      style={{ bottom: `${bottomPosition}px` }}
+      ref={ref}
+      className="fixed left-4 z-40"
+      style={{ bottom: '24px' }}
     >
       <div className="bg-white/30 backdrop-blur-md p-3 rounded-xl border border-white/50 shadow-lg flex flex-col space-y-3">
         {socialLinks.map((link) => {
@@ -32,7 +32,7 @@ const FloatingSocials: React.FC<FloatingSocialsProps> = ({ socialLinks, bottomPo
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-full transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="p-2 rounded-full transition-transform duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-500"
               aria-label={link.name}
             >
               {Icon && <Icon className="h-7 w-7" />}
@@ -42,6 +42,6 @@ const FloatingSocials: React.FC<FloatingSocialsProps> = ({ socialLinks, bottomPo
       </div>
     </div>
   );
-};
+});
 
 export default FloatingSocials;
